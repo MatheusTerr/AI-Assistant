@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistente de Qualificação de Leads Omie/OneFlow</title>
+    <!-- Carrega Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter para uma tipografia moderna e limpa -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Fundo cinza claro suave */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinha no topo para melhor layout */
+            min-height: 100vh;
+            padding: 2rem; /* Espaçamento geral */
+        }
+        .container {
+            max-width: 900px; /* Largura máxima do container principal */
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 16px; /* Cantos arredondados mais proeminentes */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra mais destacada */
+            padding: 2.5rem; /* Mais padding interno */
+            display: flex;
+            flex-direction: column;
+            gap: 2rem; /* Maior espaçamento entre seções */
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .logo {
+            height: 40px; /* Tamanho da logo */
+            object-fit: contain;
+        }
+        .input-group label {
+            font-weight: 600; /* Texto do label mais forte */
+            color: #333;
+            margin-bottom: 0.25rem;
+            display: block; /* Garante que o label ocupe sua própria linha */
+        }
+        .input-group input, .input-group textarea {
+            border: 1px solid #d1d5db; /* Borda padrão */
+            border-radius: 10px; /* Cantos arredondados para inputs */
+            padding: 0.85rem 1.15rem; /* Mais padding interno */
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: #fcfcfc; /* Levemente mais claro que o fundo */
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6; /* Borda azul ao focar */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* Sombra suave ao focar */
+        }
+        .input-group.error input, .input-group.error textarea {
+            border-color: #ef4444; /* Borda vermelha para erro */
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25);
+        }
+        .btn-primary {
+            background-image: linear-gradient(to right, #3b82f6, #60a5fa); /* Gradiente azul */
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 700; /* Mais negrito */
+            letter-spacing: 0.025em; /* Pequeno espaçamento entre letras */
+            transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); /* Sombra para botões primários */
+        }
+        .btn-primary:hover {
+            background-image: linear-gradient(to right, #2563eb, #3b82f6); /* Gradiente mais escuro ao hover */
+            transform: translateY(-2px); /* Efeito de levantamento mais pronunciado */
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.2);
+        }
+        .btn-secondary {
+            background-color: #6b7280; /* Cinza para secundário */
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 700;
+            letter-spacing: 0.025em;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px rgba(107, 114, 128, 0.3);
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563; /* Cinza mais escuro ao hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(107, 114, 128, 0.4);
+        }
+        .btn-secondary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(107, 114, 128, 0.2);
+        }
+        .btn-copy { /* Estilo para o novo botão de copiar */
+            background-color: #10b981; /* Verde */
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+            cursor: pointer;
+            border: none;
+            margin-top: 0.5rem; /* Espaçamento acima do botão */
+        }
+        .btn-copy:hover {
+            background-color: #059669; /* Verde mais escuro */
+            transform: translateY(-1px);
+        }
+        .btn-copy:active {
+            transform: translateY(0);
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: none; /* Escondido por padrão */
+            margin-right: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .result-section {
+            background-color: #f9fafb; /* Fundo mais claro para os resultados */
+            border: 1px solid #e5e7eb;
+            border-radius: 12px; /* Cantos arredondados */
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .result-box {
+            white-space: pre-wrap; /* Preserva quebras de linha */
+            word-wrap: break-word; /* Quebra palavras longas */
+            color: #374151; /* Cor de texto mais escura */
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .result-box ul {
+            list-style-type: disc; /* Adiciona marcadores de lista */
+            margin-left: 1.25rem;
+            padding-left: 0.5rem;
+        }
+        .result-box li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-8 bg-white rounded-xl shadow-lg flex flex-col space-y-6">
+        <div class="header">
+            <div class="logo-container">
+                <figure>
+                    <img src="https://ik.imagekit.io/6iz6c073z/imagem_2025-06-16_230552076.png?updatedAt=1750126091595" alt="Logo Omie" class="logo">
+                    <figcaption class="sr-only">Logo Omie</figcaption>
+                </figure>
+                <figure>
+                    <img src="https://ik.imagekit.io/6iz6c073z/logo-oneflow.png?updatedAt=1750126020083" alt="Logo OneFlow" class="logo">
+                    <figcaption class="sr-only">Logo OneFlow</figcaption>
+                </figure>
+            </div>
+            <h1 class="text-3xl font-bold text-center text-gray-800">Assistente de Qualificação e Prospecção de Leads</h1>
+            <p class="text-center text-gray-600">Otimize seu processo de vendas com a inteligência artificial da OneFlow.</p>
+            <!-- userIdDisplay e lógica de autenticação foram removidos, conforme solicitado. -->
+        </div>
+
+        <!-- Seção de Entrada de Dados do Lead -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800">Dados do Lead:</h2>
+            <div class="input-group">
+                <label for="companyName">Nome da Empresa: <span class="text-red-500">*</span></label>
+                <input type="text" id="companyName" placeholder="Ex: Contabilidade Alfa" class="block w-full">
+            </div>
+            <div class="input-group">
+                <label for="industry">Setor de Atuação: <span class="text-red-500">*</span></label>
+                <input type="text" id="industry" placeholder="Ex: Serviços Contábeis, Comércio Varejista" class="block w-full">
+            </div>
+            <div class="input-group">
+                <label for="contactRole">Cargo do Contato (Opcional):</label>
+                <input type="text" id="contactRole" placeholder="Ex: Sócio-administrador, Gerente Financeiro" class="block w-full">
+            </div>
+            <div class="input-group">
+                <label for="challenges">Principais Desafios (Opcional):</label>
+                <textarea id="challenges" rows="3" placeholder="Ex: Dificuldade na conciliação fiscal, processos manuais demorados" class="block w-full"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="companyWebsite">Site da Empresa (Opcional):</label>
+                <input type="url" id="companyWebsite" placeholder="Ex: https://www.empresa.com.br" class="block w-full">
+            </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex flex-wrap gap-4 justify-center">
+            <button id="qualifyLeadBtn" class="btn-primary flex items-center justify-center min-w-[180px]">
+                <div id="qualifySpinner" class="loading-spinner"></div>
+                Qualificar Lead
+            </button>
+            <button id="generateMessageBtn" class="btn-primary flex items-center justify-center min-w-[180px]">
+                <div id="messageSpinner" class="loading-spinner"></div>
+                Gerar Mensagem
+            </button>
+            <button id="suggestQuestionsBtn" class="btn-primary flex items-center justify-center min-w-[180px]">
+                <div id="questionsSpinner" class="loading-spinner"></div>
+                Perguntas Follow-up
+            </button>
+            <button id="brainstormValuePropsBtn" class="btn-primary flex items-center justify-center min-w-[180px]">
+                <div id="valuePropsSpinner" class="loading-spinner"></div>
+                Propostas de Valor
+            </button>
+            <button id="clearFieldsBtn" class="btn-secondary flex items-center justify-center min-w-[180px]">
+                Limpar Campos
+            </button>
+        </div>
+
+        <!-- Seção de Análise de Resposta de Lead -->
+        <div class="space-y-4 mt-6">
+            <h2 class="text-2xl font-bold text-gray-800">Análise da Resposta do Lead:</h2>
+            <div class="input-group">
+                <label for="leadResponse">Cole a resposta do lead aqui:</label>
+                <textarea id="leadResponse" rows="4" placeholder="Ex: 'Obrigado pelo contato, mas estamos satisfeitos com nosso sistema atual.'" class="block w-full"></textarea>
+            </div>
+            <div class="flex justify-center">
+                <button id="analyzeResponseBtn" class="btn-primary flex items-center justify-center min-w-[180px]">
+                    <div id="analyzeResponseSpinner" class="loading-spinner"></div>
+                    Analisar Resposta
+                </button>
+            </div>
+            <div class="result-section">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Resultado da Análise:</h3>
+                <div id="leadResponseAnalysisResult" class="result-box text-gray-700">
+                    <!-- O resultado da análise de resposta será exibido aqui -->
+                </div>
+                <button id="copyLeadResponseAnalysisBtn" class="btn-copy">Copiar Análise</button>
+            </div>
+        </div>
+
+        <!-- Seção de Resultados das Análises de IA -->
+        <div class="mt-4 space-y-6">
+            <h2 class="text-2xl font-bold text-gray-800">Resultados da Análise de IA:</h2>
+            
+            <div class="result-section">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Qualificação do Lead:</h3>
+                <div id="qualificationResult" class="result-box text-gray-700">
+                    <!-- O resultado da qualificação será exibido aqui -->
+                </div>
+                <button id="copyQualifyBtn" class="btn-copy">Copiar Qualificação</button>
+            </div>
+
+            <div class="result-section">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Mensagem Personalizada:</h3>
+                <div id="messageResult" class="result-box text-gray-700">
+                    <!-- A mensagem personalizada será exibida aqui -->
+                </div>
+                <button id="copyMessageBtn" class="btn-copy">Copiar Mensagem</button>
+            </div>
+
+            <div class="result-section">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Sugestões de Perguntas de Follow-up:</h3>
+                <div id="followUpQuestionsResult" class="result-box text-gray-700">
+                    <!-- As perguntas de follow-up serão exibidas aqui -->
+                </div>
+                <button id="copyQuestionsBtn" class="btn-copy">Copiar Perguntas</button>
+            </div>
+
+            <div class="result-section">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Brainstorm de Propostas de Valor:</h3>
+                <div id="valuePropositionsResult" class="result-box text-gray-700">
+                    <!-- As propostas de valor serão exibidas aqui -->
+                </div>
+                <button id="copyValuePropsBtn" class="btn-copy">Copiar Propostas</button>
+            </div>
+        </div>
+        <!-- A seção de Histórico de Análises foi removida, pois dependia do Firebase e não é o foco desta versão. -->
+    </div>
+
+    <script type="module">
+        // Mapeamento de elementos DOM para fácil acesso
+        const DOM = {
+            companyNameInput: document.getElementById('companyName'),
+            industryInput: document.getElementById('industry'),
+            contactRoleInput: document.getElementById('contactRole'),
+            challengesTextarea: document.getElementById('challenges'),
+            companyWebsiteInput: document.getElementById('companyWebsite'),
+            leadResponseInput: document.getElementById('leadResponse'),
+
+            qualifyLeadBtn: document.getElementById('qualifyLeadBtn'),
+            generateMessageBtn: document.getElementById('generateMessageBtn'),
+            suggestQuestionsBtn: document.getElementById('suggestQuestionsBtn'),
+            brainstormValuePropsBtn: document.getElementById('brainstormValuePropsBtn'),
+            clearFieldsBtn: document.getElementById('clearFieldsBtn'),
+            analyzeResponseBtn: document.getElementById('analyzeResponseBtn'),
+
+            qualifySpinner: document.getElementById('qualifySpinner'),
+            messageSpinner: document.getElementById('messageSpinner'),
+            questionsSpinner: document.getElementById('questionsSpinner'),
+            valuePropsSpinner: document.getElementById('valuePropsSpinner'),
+            analyzeResponseSpinner: document.getElementById('analyzeResponseSpinner'),
+
+            qualificationResultDiv: document.getElementById('qualificationResult'),
+            messageResultDiv: document.getElementById('messageResult'),
+            followUpQuestionsResult: document.getElementById('followUpQuestionsResult'),
+            valuePropositionsResult: document.getElementById('valuePropositionsResult'),
+            leadResponseAnalysisResult: document.getElementById('leadResponseAnalysisResult'),
+
+            copyQualifyBtn: document.getElementById('copyQualifyBtn'),
+            copyMessageBtn: document.getElementById('copyMessageBtn'),
+            copyQuestionsBtn: document.getElementById('copyQuestionsBtn'),
+            copyValuePropsBtn: document.getElementById('copyValuePropsBtn'),
+            copyLeadResponseAnalysisBtn: document.getElementById('copyLeadResponseAnalysisBtn'),
+        };
+
+        // **IMPORTANTE**: SUBSTITUA ESTE URL PELO URL DA SUA GOOGLE CLOUD FUNCTION DEPLOYADA.
+        // Exemplo: https://us-central1-seu-projeto-id-cloud.cloudfunctions.net/geminiProxyFunction
+        const BACKEND_FUNCTION_URL = "https://geminiproxyfunction-3l27edz5xa-uc.a.run.app"; 
+
+        // --- Funções Auxiliares ---
+
+        /**
+         * Exibe mensagens de erro/status em um elemento DOM.
+         * @param {HTMLElement} element - O elemento DOM onde a mensagem será exibida.
+         * @param {string} message - A mensagem a ser exibida.
+         * @param {boolean} isError - Indica se a mensagem é um erro (true) ou status (false).
+         */
+        function displayResult(element, message, isError = false) {
+            element.innerHTML = isError 
+                ? `<span class="text-red-600 font-medium">Erro:</span> ${message}` 
+                : message;
+        }
+
+        /**
+         * Extrai o score de fit atual da div de qualificação.
+         * @returns {string} O score de fit ou uma string padrão se não encontrado.
+         */
+        function getCurrentFitScore() {
+            try {
+                const qualificationText = DOM.qualificationResultDiv.innerText;
+                const fitMatch = qualificationText.match(/Score de Fit: (.+?)\n/);
+                if (fitMatch && fitMatch[1]) {
+                    return fitMatch[1].trim(); 
+                }
+            } catch (e) {
+                console.warn('Não foi possível parsear o score de fit anterior:', e);
+            }
+            return 'Não qualificado'; 
+        }
+
+        /**
+         * Alterna o estado de carregamento de um botão e seu spinner associado.
+         * @param {HTMLElement} button - O botão a ser manipulado.
+         * @param {HTMLElement} spinner - O spinner associado ao botão.
+         * @param {boolean} isLoading - True para estado de carregamento, false caso contrário.
+         */
+        function toggleLoadingState(button, spinner, isLoading) {
+            button.disabled = isLoading;
+            spinner.style.display = isLoading ? 'block' : 'none';
+        }
+
+        /**
+         * Copia o texto de um elemento para a área de transferência.
+         * @param {HTMLElement} element - O elemento cujo texto será copiado.
+         */
+        function copyToClipboard(element) {
+            const text = element.innerText;
+            if (text.trim() === '') {
+                return;
+            }
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = 0;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert('Texto copiado para a área de transferência!');
+            } catch (err) {
+                console.error('Falha ao copiar texto: ', err);
+                alert('Erro ao copiar texto. Por favor, copie manualmente.');
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        /**
+         * Função para chamar a API do Gemini via Cloud Function de Backend.
+         * @param {string} prompt - O prompt de texto para o modelo.
+         * @param {object} [generationConfig={}] - Configurações de geração (e.g., responseMimeType, responseSchema).
+         * @returns {Promise<any>} A resposta parseada da API.
+         */
+        async function callGeminiAPI(prompt, generationConfig = {}) {
+            if (!BACKEND_FUNCTION_URL || BACKEND_FUNCTION_URL.includes("SEU_PROJETO_ID")) {
+                alert("Erro de configuração: O URL da Cloud Function não foi definido ou está incorreto. Por favor, implante sua função e atualize a variável BACKEND_FUNCTION_URL no código do frontend.");
+                throw new Error("URL da Cloud Function não configurado.");
+            }
+
+            try {
+                const response = await fetch(BACKEND_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt, generationConfig }) // Envia prompt e config para o backend
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`Erro no Backend: ${response.status} - ${errorData.error || response.statusText}`);
+                }
+
+                const result = await response.json(); // A resposta do backend já é o que o Gemini retornou
+
+                if (result && result.text) { // O backend retorna um objeto com uma propriedade 'text'
+                    // Se a requisição original esperava JSON, parseamos aqui
+                    if (generationConfig.responseMimeType === "application/json") {
+                        return JSON.parse(result.text); 
+                    }
+                    return result.text; // Retorna texto puro
+                } else if (result && result.error) {
+                    throw new Error(`Erro da IA: ${result.error}`);
+                } else {
+                    console.error('Estrutura de resposta inesperada do Backend:', result);
+                    throw new Error('Formato de resposta inesperado do backend.');
+                }
+            } catch (error) {
+                console.error('Erro na chamada ao Backend da API Gemini:', error);
+                throw error;
+            }
+        }
+
+        /**
+         * Valida os campos obrigatórios e aplica feedback visual.
+         * @returns {boolean} True se os campos obrigatórios estão preenchidos, false caso contrário.
+         */
+        function validateInputs() {
+            let isValid = true;
+            if (!DOM.companyNameInput.value.trim()) {
+                DOM.companyNameInput.parentElement.classList.add('error');
+                isValid = false;
+            } else {
+                DOM.companyNameInput.parentElement.classList.remove('error');
+            }
+
+            if (!DOM.industryInput.value.trim()) {
+                DOM.industryInput.parentElement.classList.add('error');
+                isValid = false;
+            } else {
+                DOM.industryInput.parentElement.classList.remove('error');
+            }
+            return isValid;
+        }
+
+        /**
+         * Coleta os dados do lead dos campos de entrada.
+         * @returns {object} Objeto com os dados do lead.
+         */
+        function getLeadData() {
+            return {
+                companyName: DOM.companyNameInput.value.trim(),
+                industry: DOM.industryInput.value.trim(),
+                contactRole: DOM.contactRoleInput.value.trim(),
+                challenges: DOM.challengesTextarea.value.trim(),
+                companyWebsite: DOM.companyWebsiteInput.value.trim()
+            };
+        }
+
+        // --- Funções de Lógica de Negócio e IA ---
+
+        /**
+         * Função para qualificar o lead usando a API do Gemini via Backend.
+         */
+        async function qualifyLeadLogic() {
+            if (!validateInputs()) {
+                displayResult(DOM.qualificationResultDiv, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
+                return;
+            }
+
+            const leadData = getLeadData();
+            toggleLoadingState(DOM.qualifyLeadBtn, DOM.qualifySpinner, true);
+            displayResult(DOM.qualificationResultDiv, 'Analisando o lead...');
+            
+            // Limpa resultados de outras seções ao iniciar nova qualificação
+            DOM.messageResultDiv.innerHTML = '';
+            DOM.followUpQuestionsResult.innerHTML = '';
+            DOM.valuePropositionsResult.innerHTML = '';
+
+            const prompt = `Você é um especialista em qualificação de leads para uma empresa de software chamada OneFlow. A OneFlow oferece soluções de contabilidade para Microempreendedores Individuais (MEI), empresas do Simples Nacional (indústria, comércio e serviços) e empresas de serviços do Lucro Presumido. Seu foco é otimizar as operações fiscais, contábeis e de folha de pagamento, integrando tecnologia avançada e facilidade de uso.
+
+            Com base nos seguintes detalhes do lead, determine o "Score de Fit" (Alto Fit, Médio Fit, Baixo Fit) e forneça uma "Justificativa" detalhada que explique por que o lead se encaixa (ou não) nas categorias de clientes da OneFlow. Mencione especificamente quais módulos ou benefícios da OneFlow seriam mais relevantes para este lead.
+
+            Detalhes do Lead:
+            - Nome da Empresa: ${leadData.companyName || 'Não informado'}
+            - Setor de Atuação: ${leadData.industry || 'Não informado'}
+            - Cargo do Contato: ${leadData.contactRole || 'Não informado'}
+            - Desafios Principais: ${leadData.challenges || 'Não informado'}
+            - Site da Empresa: ${leadData.companyWebsite || 'Não informado'}
+
+            Formate sua resposta estritamente como um objeto JSON válido, com as chaves "fit_score" (string: "Alto Fit" | "Médio Fit" | "Baixo Fit") e "justification" (string detalhada).
+            Exemplo de formato esperado:
+            {
+                "fit_score": "Alto Fit",
+                "justification": "A empresa atua no setor de serviços de consultoria e os desafios indicam uma necessidade clara de automação na gestão fiscal e contábil, o que se alinha perfeitamente com as soluções para Lucro Presumido da OneFlow, especialmente na otimização da emissão de notas e conciliação."
+            }`;
+
+            try {
+                const response = await callGeminiAPI(prompt, {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "fit_score": { "type": "STRING" },
+                            "justification": { "type": "STRING" }
+                        },
+                        "propertyOrdering": ["fit_score", "justification"]
+                    }
+                });
+
+                displayResult(DOM.qualificationResultDiv, `
+                    <p class="font-bold">Score de Fit: <span class="text-blue-600">${response.fit_score || 'N/A'}</span></p>
+                    <p class="mt-2"><span class="font-bold">Justificativa:</span> ${response.justification || 'N/A'}</p>
+                `);
+
+            } catch (error) {
+                displayResult(DOM.qualificationResultDiv, `Não foi possível qualificar o lead: ${error.message}`, true);
+            } finally {
+                toggleLoadingState(DOM.qualifyLeadBtn, DOM.qualifySpinner, false);
+            }
+        }
+
+        /**
+         * Função para gerar a mensagem personalizada usando a API do Gemini via Backend.
+         */
+        async function generateMessageLogic() {
+            if (!validateInputs()) {
+                displayResult(DOM.messageResultDiv, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
+                return;
+            }
+
+            const leadData = getLeadData();
+            const fitScore = getCurrentFitScore();
+            toggleLoadingState(DOM.generateMessageBtn, DOM.messageSpinner, true);
+            displayResult(DOM.messageResultDiv, 'Gerando mensagem personalizada...');
+
+            const prompt = `Você é um especialista em prospecção de vendas para a OneFlow, uma empresa que oferece software de gestão contábil para MEIs, empresas do Simples Nacional (indústria, comércio, serviços) e empresas de serviços do Lucro Presumido. Nosso propósito é trazer prosperidade para o ecossistema empreendedor brasileiro, destravando o crescimento dos negócios por meio de uma plataforma que resolve qualquer complexidade da gestão de forma simples, intuitiva e eficiente.
+
+            Com base nos seguintes detalhes do lead e no "Score de Qualificação (Fit)" (${fitScore}), elabore um rascunho de e-mail de introdução conciso, profissional e altamente personalizado. A mensagem deve:
+            1. Ser direta, chamando a atenção imediatamente para um benefício relevante.
+            2. Mencionar o nome da empresa do lead e o cargo do contato (se disponível) para personalização.
+            3. Abordar de forma empática um dos desafios potenciais (se informado) e conectar como a solução OneFlow pode ser a resposta, destacando um módulo ou funcionalidade específica.
+            4. Enfatizar a facilidade de uso e a eficiência que a OneFlow proporciona na otimização das operações fiscais, contábeis e de folha de pagamento.
+            5. Finalizar com uma clara chamada para ação, convidando para uma breve conversa ou demonstração da plataforma.
+            6. Não inclua saudações genéricas ("Prezado(a)", "Olá"). Comece diretamente com o conteúdo personalizado.
+            7. Não inclua despedidas genéricas ("Atenciosamente", "Cordialmente").
+            8. Mantenha um tom otimista e focado em solução.
+
+            Detalhes do Lead:
+            - Nome da Empresa: ${leadData.companyName || 'Não informado'}
+            - Setor de Atuação: ${leadData.industry || 'Não informado'}
+            - Cargo do Contato: ${leadData.contactRole || 'Não informado'}
+            - Desafios Principais: ${leadData.challenges || 'Não informado'}
+            - Site da Empresa: ${leadData.companyWebsite || 'Não informado'}`;
+
+            try {
+                const response = await callGeminiAPI(prompt);
+                displayResult(DOM.messageResultDiv, response);
+            } catch (error) {
+                displayResult(DOM.messageResultDiv, `Não foi possível gerar a mensagem: ${error.message}`, true);
+            } finally {
+                toggleLoadingState(DOM.generateMessageBtn, DOM.messageSpinner, false);
+            }
+        }
+
+        /**
+         * Função para sugerir perguntas de follow-up usando a API do Gemini via Backend.
+         */
+        async function suggestFollowUpQuestionsLogic() {
+            if (!validateInputs()) {
+                displayResult(DOM.followUpQuestionsResult, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
+                return;
+            }
+
+            const leadData = getLeadData();
+            const fitScore = getCurrentFitScore();
+            toggleLoadingState(DOM.suggestQuestionsBtn, DOM.questionsSpinner, true);
+            displayResult(DOM.followUpQuestionsResult, 'Gerando sugestões de perguntas...');
+
+            const prompt = `Você é um especialista em vendas consultivas para a OneFlow. A OneFlow capacita profissionais contábeis e empresas no Simples Nacional e Lucro Presumido, automatizando rotinas fiscais, contábeis e de folha de pagamento.
+            
+            Com base nos detalhes do lead e no seu "Score de Fit" (${fitScore}), sugira 4 perguntas de follow-up abertas e perspicazes. As perguntas devem:
+            1. Ser direcionadas aos desafios ou dores prováveis do lead, relacionados à gestão contábil/fiscal.
+            2. Incentivar o lead a compartilhar mais sobre seus processos atuais e dificuldades.
+            3. Abrir caminho para apresentar as soluções da OneFlow como uma resposta a essas dores.
+            4. Evitar perguntas de "sim" ou "não".
+            
+            Detalhes do Lead:
+            - Nome da Empresa: ${leadData.companyName || 'Não informado'}
+            - Setor de Atuação: ${leadData.industry || 'Não informado'}
+            - Cargo do Contato: ${leadData.contactRole || 'Não informado'}
+            - Desafios Principais: ${leadData.challenges || 'Não informado'}
+            - Site da Empresa: ${leadData.companyWebsite || 'Não informado'}
+
+            Liste as perguntas em formato de tópicos (lista não ordenada).`;
+
+            try {
+                const response = await callGeminiAPI(prompt);
+                // Converte a lista de texto para HTML com <ul><li>
+                const htmlList = `<ul>${response.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.replace(/^- /, '')}</li>`).join('')}</ul>`;
+                displayResult(DOM.followUpQuestionsResult, htmlList);
+            } catch (error) {
+                displayResult(DOM.followUpQuestionsResult, `Não foi possível gerar as perguntas: ${error.message}`, true);
+            } finally {
+                toggleLoadingState(DOM.suggestQuestionsBtn, DOM.questionsSpinner, false);
+            }
+        }
+
+        /**
+         * Função para gerar brainstorm de propostas de valor usando a API do Gemini via Backend.
+         */
+        async function brainstormValuePropositionsLogic() {
+            if (!validateInputs()) {
+                displayResult(DOM.valuePropositionsResult, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
+                return;
+            }
+
+            const leadData = getLeadData();
+            const fitScore = getCurrentFitScore();
+            toggleLoadingState(DOM.brainstormValuePropsBtn, DOM.valuePropsSpinner, true);
+            displayResult(DOM.valuePropositionsResult, 'Realizando brainstorm de propostas de valor...');
+
+            const prompt = `Você é um estrategista de marketing e vendas para a OneFlow, que oferece software de gestão contábil com foco em eficiência, automação e simplificação para MEIs, Simples Nacional (indústria, comércio, serviços) e Lucro Presumido de serviços.
+
+            Com base nos detalhes do lead e no seu "Score de Fit" (${fitScore}), faça um brainstorm de 4 propostas de valor (benefícios claros e ângulos de venda) únicos da OneFlow que seriam mais atraentes e ressonantes para este lead específico.
+            As propostas devem ser concisas e focadas no resultado que a OneFlow entrega.
+            
+            Detalhes do Lead:
+            - Nome da Empresa: ${leadData.companyName || 'Não informado'}
+            - Setor de Atuação: ${leadData.industry || 'Não informado'}
+            - Cargo do Contato: ${leadData.contactRole || 'Não informado'}
+            - Desafios Principais: ${leadData.challenges || 'Não informado'}
+            - Site da Empresa: ${leadData.companyWebsite || 'Não informado'}
+
+            Liste as propostas de valor em formato de tópicos (lista não ordenada).`;
+
+            try {
+                const response = await callGeminiAPI(prompt);
+                // Converte a lista de texto para HTML com <ul><li>
+                const htmlList = `<ul>${response.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.replace(/^- /, '')}</li>`).join('')}</ul>`;
+                displayResult(DOM.valuePropositionsResult, htmlList);
+            } catch (error) {
+                displayResult(DOM.valuePropositionsResult, `Não foi possível gerar as propostas de valor: ${error.message}`, true);
+            } finally {
+                toggleLoadingState(DOM.brainstormValuePropsBtn, DOM.valuePropsSpinner, false);
+            }
+        }
+
+        /**
+         * Analisa a resposta de um lead para determinar sentimento e sugerir próximos passos via Backend.
+         */
+        async function analyzeLeadResponseLogic() {
+            const leadResponseText = DOM.leadResponseInput.value.trim();
+            if (!leadResponseText) {
+                displayResult(DOM.leadResponseAnalysisResult, 'Por favor, cole uma resposta de lead para analisar.', true);
+                return;
+            }
+
+            toggleLoadingState(DOM.analyzeResponseBtn, DOM.analyzeResponseSpinner, true);
+            displayResult(DOM.leadResponseAnalysisResult, 'Analisando a resposta do lead...');
+
+            const leadData = getLeadData(); // Pega dados do lead para contexto
+            const fitScore = getCurrentFitScore(); // Pega o score de fit atual para contexto
+
+            const prompt = `Você é um analista de vendas experiente para a OneFlow. Recebemos a seguinte resposta de um lead. Analise o sentimento geral da resposta (Positivo, Neutro, Negativo, Misto) e, com base nisso e no contexto do lead (se disponível), sugira 2-3 próximos passos acionáveis para o SDR ou vendedor.
+
+            **Detalhes do Lead:**
+            - Nome da Empresa: ${leadData.companyName || 'Não informado'}
+            - Setor de Atuação: ${leadData.industry || 'Não informado'}
+            - Desafios Principais: ${leadData.challenges || 'Não informado'}
+            - Score de Fit (se já qualificado): ${fitScore}
+
+            **Resposta do Lead:**
+            "${leadResponseText}"
+
+            **Formato da Resposta:**
+            Sentimento: [Sentimento]
+            Próximos Passos Sugeridos:
+            - [Passo 1]
+            - [Passo 2]
+            - [Passo 3 (opcional)]`;
+
+            try {
+                const response = await callGeminiAPI(prompt);
+                displayResult(DOM.leadResponseAnalysisResult, response);
+            } catch (error) {
+                displayResult(DOM.leadResponseAnalysisResult, `Não foi possível analisar a resposta: ${error.message}`, true);
+            } finally {
+                toggleLoadingState(DOM.analyzeResponseBtn, DOM.analyzeResponseSpinner, false);
+            }
+        }
+
+
+        /**
+         * Limpa todos os campos de entrada e as áreas de resultado.
+         */
+        function clearAllFields() {
+            DOM.companyNameInput.value = '';
+            DOM.industryInput.value = '';
+            DOM.contactRoleInput.value = '';
+            DOM.challengesTextarea.value = '';
+            DOM.companyWebsiteInput.value = '';
+            DOM.leadResponseInput.value = ''; // Limpa o campo de resposta do lead
+
+            // Limpa todas as divs de resultado
+            DOM.qualificationResultDiv.innerHTML = '';
+            DOM.messageResultDiv.innerHTML = '';
+            DOM.followUpQuestionsResult.innerHTML = '';
+            DOM.valuePropositionsResult.innerHTML = '';
+            DOM.leadResponseAnalysisResult.innerHTML = ''; // Limpa o resultado da análise de resposta
+
+            // Remove a classe de erro dos inputs
+            DOM.companyNameInput.parentElement.classList.remove('error');
+            DOM.industryInput.parentElement.classList.remove('error');
+
+            // Esconde spinners e habilita botões
+            toggleLoadingState(DOM.qualifyLeadBtn, DOM.qualifySpinner, false);
+            toggleLoadingState(DOM.generateMessageBtn, DOM.messageSpinner, false);
+            toggleLoadingState(DOM.suggestQuestionsBtn, DOM.questionsSpinner, false);
+            toggleLoadingState(DOM.brainstormValuePropsBtn, DOM.valuePropsSpinner, false);
+            toggleLoadingState(DOM.analyzeResponseBtn, DOM.analyzeResponseSpinner, false); // Botão de análise de resposta
+        }
+
+        // --- Adição de Event Listeners ---
+        DOM.qualifyLeadBtn.addEventListener('click', qualifyLeadLogic);
+        DOM.generateMessageBtn.addEventListener('click', generateMessageLogic);
+        DOM.suggestQuestionsBtn.addEventListener('click', suggestFollowUpQuestionsLogic);
+        DOM.brainstormValuePropsBtn.addEventListener('click', brainstormValuePropositionsLogic);
+        DOM.analyzeResponseBtn.addEventListener('click', analyzeLeadResponseLogic); // Novo Event Listener para análise de resposta
+        DOM.clearFieldsBtn.addEventListener('click', clearAllFields);
+
+        // Adiciona listeners para os botões de copiar
+        DOM.copyQualifyBtn.addEventListener('click', () => copyToClipboard(DOM.qualificationResultDiv));
+        DOM.copyMessageBtn.addEventListener('click', () => copyToClipboard(DOM.messageResultDiv));
+        DOM.copyQuestionsBtn.addEventListener('click', () => copyToClipboard(DOM.followUpQuestionsResult));
+        DOM.copyValuePropsBtn.addEventListener('click', () => copyToClipboard(DOM.valuePropositionsResult));
+        DOM.copyLeadResponseAnalysisBtn.addEventListener('click', () => copyToClipboard(DOM.leadResponseAnalysisResult)); // Novo botão de copiar
+
+        // Adiciona um listener para remover a classe 'error' ao focar/digitar
+        DOM.companyNameInput.addEventListener('input', () => DOM.companyNameInput.parentElement.classList.remove('error'));
+        DOM.industryInput.addEventListener('input', () => DOM.industryInput.parentElement.classList.remove('error'));
+    </script>
+</body>
+</html>
