@@ -11,23 +11,23 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Fundo cinza claro suave */
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Alinha no topo para melhor layout */
+            align-items: flex-start;
             min-height: 100vh;
-            padding: 2rem; /* Espaçamento geral */
+            padding: 2rem;
         }
         .container {
-            max-width: 900px; /* Largura máxima do container principal */
+            max-width: 900px;
             width: 100%;
             background-color: #ffffff;
-            border-radius: 16px; /* Cantos arredondados mais proeminentes */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra mais destacada */
-            padding: 2.5rem; /* Mais padding interno */
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem; /* Maior espaçamento entre seções */
+            gap: 2rem;
         }
         .header {
             display: flex;
@@ -43,47 +43,47 @@
             gap: 1.5rem;
         }
         .logo {
-            height: 40px; /* Tamanho da logo */
+            height: 40px;
             object-fit: contain;
         }
         .input-group label {
-            font-weight: 600; /* Texto do label mais forte */
+            font-weight: 600;
             color: #333;
             margin-bottom: 0.25rem;
-            display: block; /* Garante que o label ocupe sua própria linha */
+            display: block;
         }
         .input-group input, .input-group textarea {
-            border: 1px solid #d1d5db; /* Borda padrão */
-            border-radius: 10px; /* Cantos arredondados para inputs */
-            padding: 0.85rem 1.15rem; /* Mais padding interno */
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 0.85rem 1.15rem;
             width: 100%;
             transition: border-color 0.2s, box-shadow 0.2s;
-            background-color: #fcfcfc; /* Levemente mais claro que o fundo */
+            background-color: #fcfcfc;
         }
         .input-group input:focus, .input-group textarea:focus {
             outline: none;
-            border-color: #3b82f6; /* Borda azul ao focar */
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* Sombra suave ao focar */
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
         }
         .input-group.error input, .input-group.error textarea {
-            border-color: #ef4444; /* Borda vermelha para erro */
+            border-color: #ef4444;
             box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25);
         }
         .btn-primary {
-            background-image: linear-gradient(to right, #3b82f6, #60a5fa); /* Gradiente azul */
+            background-image: linear-gradient(to right, #3b82f6, #60a5fa);
             color: white;
             padding: 0.9rem 1.8rem;
             border-radius: 10px;
-            font-weight: 700; /* Mais negrito */
-            letter-spacing: 0.025em; /* Pequeno espaçamento entre letras */
+            font-weight: 700;
+            letter-spacing: 0.025em;
             transition: background-image 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
             cursor: pointer;
             border: none;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); /* Sombra para botões primários */
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
         }
         .btn-primary:hover {
-            background-image: linear-gradient(to right, #2563eb, #3b82f6); /* Gradiente mais escuro ao hover */
-            transform: translateY(-2px); /* Efeito de levantamento mais pronunciado */
+            background-image: linear-gradient(to right, #2563eb, #3b82f6);
+            transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
         }
         .btn-primary:active {
@@ -91,7 +91,7 @@
             box-shadow: 0 2px 5px rgba(59, 130, 246, 0.2);
         }
         .btn-secondary {
-            background-color: #6b7280; /* Cinza para secundário */
+            background-color: #6b7280;
             color: white;
             padding: 0.9rem 1.8rem;
             border-radius: 10px;
@@ -103,7 +103,7 @@
             box-shadow: 0 4px 10px rgba(107, 114, 128, 0.3);
         }
         .btn-secondary:hover {
-            background-color: #4b5563; /* Cinza mais escuro ao hover */
+            background-color: #4b5563;
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(107, 114, 128, 0.4);
         }
@@ -111,8 +111,8 @@
             transform: translateY(0);
             box-shadow: 0 2px 5px rgba(107, 114, 128, 0.2);
         }
-        .btn-copy { /* Estilo para o novo botão de copiar */
-            background-color: #10b981; /* Verde */
+        .btn-copy {
+            background-color: #10b981;
             color: white;
             padding: 0.4rem 0.8rem;
             border-radius: 6px;
@@ -121,10 +121,10 @@
             transition: background-color 0.2s, transform 0.1s;
             cursor: pointer;
             border: none;
-            margin-top: 0.5rem; /* Espaçamento acima do botão */
+            margin-top: 0.5rem;
         }
         .btn-copy:hover {
-            background-color: #059669; /* Verde mais escuro */
+            background-color: #059669;
             transform: translateY(-1px);
         }
         .btn-copy:active {
@@ -137,7 +137,7 @@
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
-            display: none; /* Escondido por padrão */
+            display: none;
             margin-right: 0.5rem;
         }
         @keyframes spin {
@@ -145,21 +145,21 @@
             100% { transform: rotate(360deg); }
         }
         .result-section {
-            background-color: #f9fafb; /* Fundo mais claro para os resultados */
+            background-color: #f9fafb;
             border: 1px solid #e5e7eb;
-            border-radius: 12px; /* Cantos arredondados */
+            border-radius: 12px;
             padding: 1.5rem;
             margin-top: 1rem;
         }
         .result-box {
-            white-space: pre-wrap; /* Preserva quebras de linha */
-            word-wrap: break-word; /* Quebra palavras longas */
-            color: #374151; /* Cor de texto mais escura */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #374151;
             font-size: 0.95rem;
             line-height: 1.6;
         }
         .result-box ul {
-            list-style-type: disc; /* Adiciona marcadores de lista */
+            list-style-type: disc;
             margin-left: 1.25rem;
             padding-left: 0.5rem;
         }
@@ -183,7 +183,6 @@
             </div>
             <h1 class="text-3xl font-bold text-center text-gray-800">Assistente de Qualificação e Prospecção de Leads</h1>
             <p class="text-center text-gray-600">Otimize seu processo de vendas com a inteligência artificial da OneFlow.</p>
-            <!-- userIdDisplay e lógica de autenticação foram removidos, conforme solicitado. -->
         </div>
 
         <!-- Seção de Entrada de Dados do Lead -->
@@ -208,6 +207,15 @@
             <div class="input-group">
                 <label for="companyWebsite">Site da Empresa (Opcional):</label>
                 <input type="url" id="companyWebsite" placeholder="Ex: https://www.empresa.com.br" class="block w-full">
+            </div>
+        </div>
+
+        <!-- NOVO: Seção do Código de Acesso -->
+        <div class="space-y-2 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
+            <h2 class="text-xl font-bold text-gray-800">Controle de Acesso</h2>
+            <div class="input-group">
+                <label for="accessCode">Código de Acesso: <span class="text-red-500">*</span></label>
+                <input type="password" id="accessCode" placeholder="Insira o código para habilitar a IA" class="block w-full">
             </div>
         </div>
 
@@ -292,7 +300,6 @@
                 <button id="copyValuePropsBtn" class="btn-copy">Copiar Propostas</button>
             </div>
         </div>
-        <!-- A seção de Histórico de Análises foi removida, pois dependia do Firebase e não é o foco desta versão. -->
     </div>
 
     <script type="module">
@@ -304,6 +311,8 @@
             challengesTextarea: document.getElementById('challenges'),
             companyWebsiteInput: document.getElementById('companyWebsite'),
             leadResponseInput: document.getElementById('leadResponse'),
+            // NOVO: Mapeia o campo de código de acesso
+            accessCodeInput: document.getElementById('accessCode'),
 
             qualifyLeadBtn: document.getElementById('qualifyLeadBtn'),
             generateMessageBtn: document.getElementById('generateMessageBtn'),
@@ -331,28 +340,17 @@
             copyLeadResponseAnalysisBtn: document.getElementById('copyLeadResponseAnalysisBtn'),
         };
 
-        // **IMPORTANTE**: SUBSTITUA ESTE URL PELO URL DA SUA GOOGLE CLOUD FUNCTION DEPLOYADA.
-        // Exemplo: https://us-central1-seu-projeto-id-cloud.cloudfunctions.net/geminiProxyFunction
+        // URL da sua Cloud Function (já deve estar correta)
         const BACKEND_FUNCTION_URL = "https://geminiproxyfunction-3l27edz5xa-uc.a.run.app"; 
 
         // --- Funções Auxiliares ---
 
-        /**
-         * Exibe mensagens de erro/status em um elemento DOM.
-         * @param {HTMLElement} element - O elemento DOM onde a mensagem será exibida.
-         * @param {string} message - A mensagem a ser exibida.
-         * @param {boolean} isError - Indica se a mensagem é um erro (true) ou status (false).
-         */
         function displayResult(element, message, isError = false) {
             element.innerHTML = isError 
                 ? `<span class="text-red-600 font-medium">Erro:</span> ${message}` 
                 : message;
         }
 
-        /**
-         * Extrai o score de fit atual da div de qualificação.
-         * @returns {string} O score de fit ou uma string padrão se não encontrado.
-         */
         function getCurrentFitScore() {
             try {
                 const qualificationText = DOM.qualificationResultDiv.innerText;
@@ -366,21 +364,11 @@
             return 'Não qualificado'; 
         }
 
-        /**
-         * Alterna o estado de carregamento de um botão e seu spinner associado.
-         * @param {HTMLElement} button - O botão a ser manipulado.
-         * @param {HTMLElement} spinner - O spinner associado ao botão.
-         * @param {boolean} isLoading - True para estado de carregamento, false caso contrário.
-         */
         function toggleLoadingState(button, spinner, isLoading) {
             button.disabled = isLoading;
             spinner.style.display = isLoading ? 'block' : 'none';
         }
 
-        /**
-         * Copia o texto de um elemento para a área de transferência.
-         * @param {HTMLElement} element - O elemento cujo texto será copiado.
-         */
         function copyToClipboard(element) {
             const text = element.innerText;
             if (text.trim() === '') {
@@ -403,38 +391,44 @@
             }
         }
 
-        /**
-         * Função para chamar a API do Gemini via Cloud Function de Backend.
-         * @param {string} prompt - O prompt de texto para o modelo.
-         * @param {object} [generationConfig={}] - Configurações de geração (e.g., responseMimeType, responseSchema).
-         * @returns {Promise<any>} A resposta parseada da API.
-         */
+        // ALTERADO: Função de chamada à API agora envia o código de acesso
         async function callGeminiAPI(prompt, generationConfig = {}) {
             if (!BACKEND_FUNCTION_URL || BACKEND_FUNCTION_URL.includes("SEU_PROJETO_ID")) {
-                alert("Erro de configuração: O URL da Cloud Function não foi definido ou está incorreto. Por favor, implante sua função e atualize a variável BACKEND_FUNCTION_URL no código do frontend.");
+                alert("Erro de configuração: O URL da Cloud Function não foi definido.");
                 throw new Error("URL da Cloud Function não configurado.");
+            }
+            
+            // Pega o código de acesso do campo de input
+            const accessCode = DOM.accessCodeInput.value.trim();
+            if (!accessCode) {
+                alert("Por favor, insira um Código de Acesso para usar as funções de IA.");
+                throw new Error("Código de Acesso não fornecido.");
             }
 
             try {
                 const response = await fetch(BACKEND_FUNCTION_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt, generationConfig }) // Envia prompt e config para o backend
+                    // Envia prompt, config e o código de acesso para o backend
+                    body: JSON.stringify({ prompt, generationConfig, accessCode }) 
                 });
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
+                    // Trata o erro 401 (Unauthorized) de forma especial
+                    if(response.status === 401) {
+                        throw new Error('Código de Acesso inválido.');
+                    }
                     throw new Error(`Erro no Backend: ${response.status} - ${errorData.error || response.statusText}`);
                 }
 
-                const result = await response.json(); // A resposta do backend já é o que o Gemini retornou
+                const result = await response.json();
 
-                if (result && result.text) { // O backend retorna um objeto com uma propriedade 'text'
-                    // Se a requisição original esperava JSON, parseamos aqui
+                if (result && result.text) {
                     if (generationConfig.responseMimeType === "application/json") {
                         return JSON.parse(result.text); 
                     }
-                    return result.text; // Retorna texto puro
+                    return result.text;
                 } else if (result && result.error) {
                     throw new Error(`Erro da IA: ${result.error}`);
                 } else {
@@ -447,10 +441,6 @@
             }
         }
 
-        /**
-         * Valida os campos obrigatórios e aplica feedback visual.
-         * @returns {boolean} True se os campos obrigatórios estão preenchidos, false caso contrário.
-         */
         function validateInputs() {
             let isValid = true;
             if (!DOM.companyNameInput.value.trim()) {
@@ -469,10 +459,6 @@
             return isValid;
         }
 
-        /**
-         * Coleta os dados do lead dos campos de entrada.
-         * @returns {object} Objeto com os dados do lead.
-         */
         function getLeadData() {
             return {
                 companyName: DOM.companyNameInput.value.trim(),
@@ -483,11 +469,8 @@
             };
         }
 
-        // --- Funções de Lógica de Negócio e IA ---
-
-        /**
-         * Função para qualificar o lead usando a API do Gemini via Backend.
-         */
+        // --- Funções de Lógica de Negócio e IA (sem alterações, usarão o novo callGeminiAPI) ---
+        
         async function qualifyLeadLogic() {
             if (!validateInputs()) {
                 displayResult(DOM.qualificationResultDiv, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
@@ -498,7 +481,6 @@
             toggleLoadingState(DOM.qualifyLeadBtn, DOM.qualifySpinner, true);
             displayResult(DOM.qualificationResultDiv, 'Analisando o lead...');
             
-            // Limpa resultados de outras seções ao iniciar nova qualificação
             DOM.messageResultDiv.innerHTML = '';
             DOM.followUpQuestionsResult.innerHTML = '';
             DOM.valuePropositionsResult.innerHTML = '';
@@ -546,9 +528,6 @@
             }
         }
 
-        /**
-         * Função para gerar a mensagem personalizada usando a API do Gemini via Backend.
-         */
         async function generateMessageLogic() {
             if (!validateInputs()) {
                 displayResult(DOM.messageResultDiv, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
@@ -589,9 +568,6 @@
             }
         }
 
-        /**
-         * Função para sugerir perguntas de follow-up usando a API do Gemini via Backend.
-         */
         async function suggestFollowUpQuestionsLogic() {
             if (!validateInputs()) {
                 displayResult(DOM.followUpQuestionsResult, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
@@ -622,7 +598,6 @@
 
             try {
                 const response = await callGeminiAPI(prompt);
-                // Converte a lista de texto para HTML com <ul><li>
                 const htmlList = `<ul>${response.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.replace(/^- /, '')}</li>`).join('')}</ul>`;
                 displayResult(DOM.followUpQuestionsResult, htmlList);
             } catch (error) {
@@ -632,9 +607,6 @@
             }
         }
 
-        /**
-         * Função para gerar brainstorm de propostas de valor usando a API do Gemini via Backend.
-         */
         async function brainstormValuePropositionsLogic() {
             if (!validateInputs()) {
                 displayResult(DOM.valuePropositionsResult, 'Por favor, preencha o Nome da Empresa e o Setor de Atuação.', true);
@@ -662,7 +634,6 @@
 
             try {
                 const response = await callGeminiAPI(prompt);
-                // Converte a lista de texto para HTML com <ul><li>
                 const htmlList = `<ul>${response.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.replace(/^- /, '')}</li>`).join('')}</ul>`;
                 displayResult(DOM.valuePropositionsResult, htmlList);
             } catch (error) {
@@ -672,9 +643,6 @@
             }
         }
 
-        /**
-         * Analisa a resposta de um lead para determinar sentimento e sugerir próximos passos via Backend.
-         */
         async function analyzeLeadResponseLogic() {
             const leadResponseText = DOM.leadResponseInput.value.trim();
             if (!leadResponseText) {
@@ -685,8 +653,8 @@
             toggleLoadingState(DOM.analyzeResponseBtn, DOM.analyzeResponseSpinner, true);
             displayResult(DOM.leadResponseAnalysisResult, 'Analisando a resposta do lead...');
 
-            const leadData = getLeadData(); // Pega dados do lead para contexto
-            const fitScore = getCurrentFitScore(); // Pega o score de fit atual para contexto
+            const leadData = getLeadData();
+            const fitScore = getCurrentFitScore();
 
             const prompt = `Você é um analista de vendas experiente para a OneFlow. Recebemos a seguinte resposta de um lead. Analise o sentimento geral da resposta (Positivo, Neutro, Negativo, Misto) e, com base nisso e no contexto do lead (se disponível), sugira 2-3 próximos passos acionáveis para o SDR ou vendedor.
 
@@ -717,34 +685,30 @@
         }
 
 
-        /**
-         * Limpa todos os campos de entrada e as áreas de resultado.
-         */
         function clearAllFields() {
             DOM.companyNameInput.value = '';
             DOM.industryInput.value = '';
             DOM.contactRoleInput.value = '';
             DOM.challengesTextarea.value = '';
             DOM.companyWebsiteInput.value = '';
-            DOM.leadResponseInput.value = ''; // Limpa o campo de resposta do lead
+            DOM.leadResponseInput.value = ''; 
+            // Limpa também o código de acesso, mas não seria ideal em um app real (manteria o login)
+            DOM.accessCodeInput.value = '';
 
-            // Limpa todas as divs de resultado
             DOM.qualificationResultDiv.innerHTML = '';
             DOM.messageResultDiv.innerHTML = '';
             DOM.followUpQuestionsResult.innerHTML = '';
             DOM.valuePropositionsResult.innerHTML = '';
-            DOM.leadResponseAnalysisResult.innerHTML = ''; // Limpa o resultado da análise de resposta
+            DOM.leadResponseAnalysisResult.innerHTML = ''; 
 
-            // Remove a classe de erro dos inputs
             DOM.companyNameInput.parentElement.classList.remove('error');
             DOM.industryInput.parentElement.classList.remove('error');
 
-            // Esconde spinners e habilita botões
             toggleLoadingState(DOM.qualifyLeadBtn, DOM.qualifySpinner, false);
             toggleLoadingState(DOM.generateMessageBtn, DOM.messageSpinner, false);
             toggleLoadingState(DOM.suggestQuestionsBtn, DOM.questionsSpinner, false);
             toggleLoadingState(DOM.brainstormValuePropsBtn, DOM.valuePropsSpinner, false);
-            toggleLoadingState(DOM.analyzeResponseBtn, DOM.analyzeResponseSpinner, false); // Botão de análise de resposta
+            toggleLoadingState(DOM.analyzeResponseBtn, DOM.analyzeResponseSpinner, false);
         }
 
         // --- Adição de Event Listeners ---
@@ -752,17 +716,17 @@
         DOM.generateMessageBtn.addEventListener('click', generateMessageLogic);
         DOM.suggestQuestionsBtn.addEventListener('click', suggestFollowUpQuestionsLogic);
         DOM.brainstormValuePropsBtn.addEventListener('click', brainstormValuePropositionsLogic);
-        DOM.analyzeResponseBtn.addEventListener('click', analyzeLeadResponseLogic); // Novo Event Listener para análise de resposta
+        DOM.analyzeResponseBtn.addEventListener('click', analyzeLeadResponseLogic);
         DOM.clearFieldsBtn.addEventListener('click', clearAllFields);
 
-        // Adiciona listeners para os botões de copiar
+        // Listeners dos botões de copiar
         DOM.copyQualifyBtn.addEventListener('click', () => copyToClipboard(DOM.qualificationResultDiv));
         DOM.copyMessageBtn.addEventListener('click', () => copyToClipboard(DOM.messageResultDiv));
         DOM.copyQuestionsBtn.addEventListener('click', () => copyToClipboard(DOM.followUpQuestionsResult));
         DOM.copyValuePropsBtn.addEventListener('click', () => copyToClipboard(DOM.valuePropositionsResult));
-        DOM.copyLeadResponseAnalysisBtn.addEventListener('click', () => copyToClipboard(DOM.leadResponseAnalysisResult)); // Novo botão de copiar
+        DOM.copyLeadResponseAnalysisBtn.addEventListener('click', () => copyToClipboard(DOM.leadResponseAnalysisResult));
 
-        // Adiciona um listener para remover a classe 'error' ao focar/digitar
+        // Listeners dos inputs para remover erro
         DOM.companyNameInput.addEventListener('input', () => DOM.companyNameInput.parentElement.classList.remove('error'));
         DOM.industryInput.addEventListener('input', () => DOM.industryInput.parentElement.classList.remove('error'));
     </script>
