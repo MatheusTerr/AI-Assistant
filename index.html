@@ -354,14 +354,14 @@
         function getCurrentFitScore() {
             try {
                 const qualificationText = DOM.qualificationResultDiv.innerText;
-                const fitMatch = qualificationText.match(/Score de Fit: (.+?)\n/);
+                const fitMatch = qualificationText.match(/Score de Fit:\s*(.+?)(?:\n|$)/);
                 if (fitMatch && fitMatch[1]) {
-                    return fitMatch[1].trim(); 
+                    return fitMatch[1].trim();
                 }
             } catch (e) {
                 console.warn('Não foi possível parsear o score de fit anterior:', e);
             }
-            return 'Não qualificado'; 
+            return 'Não qualificado';
         }
 
         function toggleLoadingState(button, spinner, isLoading) {
