@@ -7,11 +7,11 @@ A smart tool to optimize the Omie/OneFlow sales process, automating lead qualifi
 </div>
 
 <p align="center">
-<img alt="Status" src="https://www.google.com/search?q=https://img.shields.io/badge/status-completed-brightgreen%3Fstyle%3Dfor-the-badge">
+<img alt="Status" src="https://img.shields.io/badge/status-completed-brightgreen?style=for-the-badge">
 <img alt="Technology" src="https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white">
 <img alt="Backend" src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white">
 <img alt="Frontend" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
-<img alt="License" src="https://www.google.com/search?q=https://img.shields.io/badge/license-MIT-yellow%3Fstyle%3Dfor-the-badge">
+<img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge">
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@ A smart tool to optimize the Omie/OneFlow sales process, automating lead qualifi
 
 <div align="center">
 <a href="https://matheusterr.github.io/AI-Assistant/" target="_blank">
-<img alt="Access Live Demo" src="https://www.google.com/search?q=https://img.shields.io/badge/Access_Live_Demo-34D399%3Fstyle%3Dfor-the-badge%26logo%3Drocket%26logoColor%3Dwhite">
+<img alt="Access Live Demo" src="https://img.shields.io/badge/Access_Live_Demo-34D399?style=for-the-badge&logo=rocket&logoColor=white">
 </a>
 </div>
 
